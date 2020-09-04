@@ -33,11 +33,23 @@ public class FakeUserDataAccessService implements UserDao {
 
     @Override
     public int deleteUserById(UUID id) {
-        return 0;
+        Optional<User> userMaybe = selectUserById(id);
+        if(userMaybe.isEmpty())
+            return 0;
+        DB.remove(userMaybe.get());
+        return 1;
     }
 
     @Override
-    public int updateUser(UUID id, User user) {
-        return 0;
+    public int updateUser(UUID id, User update) {
+        return selectUserById(id)
+                .map(user -> {
+                    int indexOfUserToUpdate = DB.indexOf(user);
+                    if (indexOfUserToUpdate >= 0) {
+                        DB.set(indexOfUserToUpdate, new User(id, update.getName()));
+                        return 1;
+                    }
+                    return 0;
+                }).orElse(0);
     }
 }

@@ -1,0 +1,1 @@
+Just a basic API in Spring Boot 2 for learning purposes

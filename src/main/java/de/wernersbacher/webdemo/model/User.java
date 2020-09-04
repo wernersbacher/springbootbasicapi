@@ -2,11 +2,13 @@ package de.wernersbacher.webdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class User {
 
     private final UUID id;
+    @NotBlank
     private final String name;
 
     public UUID getId() {
